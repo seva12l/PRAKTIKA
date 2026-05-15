@@ -1,0 +1,42 @@
+<Window x:Class="EmployeeApp.EmployeeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Сотрудник"
+        Height="380"
+        Width="380"
+        Background="#F4F4F4"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+
+    <StackPanel Margin="20">
+        <TextBlock Text="ФИО" FontWeight="Bold"/>
+        <TextBox Margin="0,5,0,10" Height="25"
+                 Text="{Binding FullName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <TextBlock Text="Должность" FontWeight="Bold"/>
+        <ComboBox Margin="0,5,0,10" Height="25"
+                  SelectedItem="{Binding Position, Mode=TwoWay}">
+            <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib">Менеджер</sys:String>
+            <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib">Разработчик</sys:String>
+            <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib">Бухгалтер</sys:String>
+            <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib">Дизайнер</sys:String>
+        </ComboBox>
+
+        <TextBlock Text="Отдел" FontWeight="Bold"/>
+        <ComboBox x:Name="DepartmentBox"
+                  Margin="0,5,0,10" Height="25"
+                  DisplayMemberPath="Name"
+                  SelectedValuePath="Name"
+                  SelectedValue="{Binding Department, Mode=TwoWay}"/>
+
+        <TextBlock Text="Оклад" FontWeight="Bold"/>
+        <TextBox Margin="0,5,0,20" Height="25"
+                 Text="{Binding Salary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Сохранить" Width="100" Height="30" Margin="0,0,10,0"
+                    Background="#2E86C1" Foreground="White" Click="SaveButton_Click"/>
+            <Button Content="Отмена" Width="100" Height="30" Click="CancelButton_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

@@ -1,0 +1,37 @@
+[
+  {
+    "FullName": "Иванов Иван",
+    "Position": "Менеджер",
+    "Department": "Управление",
+    "Salary": 60000,
+    "IsAvailable": true
+  },
+  {
+    "FullName": "Петров Пётр",
+    "Position": "Разработчик",
+    "Department": "Разработка",
+    "Salary": 95000,
+    "IsAvailable": true
+  },
+  {
+    "FullName": "Сидорова Анна",
+    "Position": "Бухгалтер",
+    "Department": "Финансы",
+    "Salary": 70000,
+    "IsAvailable": false
+  },
+  {
+    "FullName": "Кузнецов Алексей",
+    "Position": "Разработчик",
+    "Department": "Разработка",
+    "Salary": 110000,
+    "IsAvailable": true
+  },
+  {
+    "FullName": "Смирнова Ольга",
+    "Position": "Дизайнер",
+    "Department": "Дизайн",
+    "Salary": 75000,
+    "IsAvailable": false
+  }
+]

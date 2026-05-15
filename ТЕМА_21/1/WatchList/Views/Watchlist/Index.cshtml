@@ -1,0 +1,81 @@
+@model List<IGrouping<WatchList.Models.WatchStatus, WatchList.Models.WatchItem>>
+@using WatchList.Models
+@{
+    ViewData["Title"] = "Мой список";
+
+    string StatusName(WatchStatus s) => s switch
+    {
+        WatchStatus.Planned => "Запланировано",
+        WatchStatus.Watching => "Смотрю",
+        WatchStatus.Watched => "Просмотрено",
+        _ => s.ToString()
+    };
+
+    string StatusBadge(WatchStatus s) => s switch
+    {
+        WatchStatus.Planned => "bg-secondary",
+        WatchStatus.Watching => "bg-warning text-dark",
+        WatchStatus.Watched => "bg-success",
+        _ => "bg-secondary"
+    };
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="m-0">Мой WatchList</h2>
+        <small class="text-muted">Всего в списке: @ViewBag.Total</small>
+    </div>
+    <a class="btn btn-primary" asp-action="Add">Добавить</a>
+</div>
+
+@if (Model.Count == 0)
+{
+    <div class="alert alert-info">Список пуст. Добавьте первый фильм или сериал.</div>
+}
+
+@foreach (var group in Model)
+{
+    <div class="mb-4">
+        <h4 class="mb-3">
+            <span class="badge @StatusBadge(group.Key) me-2">@StatusName(group.Key)</span>
+            <span class="text-muted small">(@group.Count())</span>
+        </h4>
+        <div class="row g-3">
+            @foreach (var item in group)
+            {
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Title</h5>
+                            <p class="card-text mb-1">
+                                <small class="text-muted">
+                                    @(item.Type == WatchType.Movie ? "Фильм" : "Сериал") · @item.Genre · @item.DateAdded.ToShortDateString()
+                                </small>
+                            </p>
+                        </div>
+                        <div class="card-footer bg-white d-flex gap-2 flex-wrap">
+                            <a class="btn btn-outline-primary btn-sm" asp-action="Details" asp-route-id="@item.Id">Подробнее</a>
+                            <a class="btn btn-outline-secondary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Изменить</a>
+                            @if (item.Status != WatchStatus.Watched)
+                            {
+                                <a class="btn btn-success btn-sm" asp-action="MarkAsWatched" asp-route-id="@item.Id">Просмотрено</a>
+                            }
+                            <form asp-action="Delete" asp-route-id="@item.Id" method="post" class="ms-auto">
+                                @Html.AntiForgeryToken()
+                                <button class="btn btn-outline-danger btn-sm" type="submit">Удалить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

@@ -1,0 +1,86 @@
+<Window x:Class="EmployeeApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Учёт сотрудников"
+        Height="450"
+        Width="750"
+        Background="#F4F4F4">
+
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Grid.Column="0"
+                  Header="Фильтр по должности"
+                  Margin="5"
+                  Padding="10">
+            <StackPanel>
+                <RadioButton x:Name="FilterAll"
+                             Content="Все"
+                             IsChecked="True"
+                             GroupName="PositionFilter"
+                             Margin="0,4"
+                             Checked="Filter_Checked"/>
+                <RadioButton x:Name="FilterManager"
+                             Content="Менеджер"
+                             GroupName="PositionFilter"
+                             Margin="0,4"
+                             Checked="Filter_Checked"/>
+                <RadioButton x:Name="FilterDeveloper"
+                             Content="Разработчик"
+                             GroupName="PositionFilter"
+                             Margin="0,4"
+                             Checked="Filter_Checked"/>
+                <RadioButton x:Name="FilterAccountant"
+                             Content="Бухгалтер"
+                             GroupName="PositionFilter"
+                             Margin="0,4"
+                             Checked="Filter_Checked"/>
+                <RadioButton x:Name="FilterDesigner"
+                             Content="Дизайнер"
+                             GroupName="PositionFilter"
+                             Margin="0,4"
+                             Checked="Filter_Checked"/>
+
+                <Button Content="Добавить"
+                        Height="30"
+                        Margin="0,20,0,5"
+                        Background="#2E86C1"
+                        Foreground="White"
+                        Click="AddButton_Click"/>
+                <Button Content="Редактировать"
+                        Height="30"
+                        Margin="0,5"
+                        Background="#28B463"
+                        Foreground="White"
+                        Click="EditButton_Click"/>
+                <Button Content="Удалить"
+                        Height="30"
+                        Margin="0,5"
+                        Background="#C0392B"
+                        Foreground="White"
+                        Click="DeleteButton_Click"/>
+            </StackPanel>
+        </GroupBox>
+
+        <ListBox x:Name="EmployeeListBox"
+                 Grid.Column="1"
+                 Margin="5">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="5">
+                        <TextBlock Text="{Binding FullName}" FontWeight="Bold" FontSize="14"/>
+                        <TextBlock Text="{Binding Position}" FontSize="12" Foreground="Gray"/>
+                        <TextBlock FontSize="12">
+                            <Run Text="Оклад: "/>
+                            <Run Text="{Binding Salary}"/>
+                            <Run Text=" руб."/>
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>

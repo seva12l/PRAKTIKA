@@ -1,0 +1,33 @@
+@model WatchList.Models.WatchItem
+@using WatchList.Models
+@{
+    ViewData["Title"] = Model.Title;
+    string statusText = Model.Status switch
+    {
+        WatchStatus.Planned => "Запланировано",
+        WatchStatus.Watching => "Смотрю",
+        WatchStatus.Watched => "Просмотрено",
+        _ => Model.Status.ToString()
+    };
+    string typeText = Model.Type == WatchType.Movie ? "Фильм" : "Сериал";
+}
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h2 class="card-title">@Model.Title</h2>
+        <p class="text-muted">@typeText · @Model.Genre</p>
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Статус</dt>
+            <dd class="col-sm-9">@statusText</dd>
+            <dt class="col-sm-3">Дата добавления</dt>
+            <dd class="col-sm-9">@Model.DateAdded.ToString("g")</dd>
+        </dl>
+    </div>
+    <div class="card-footer bg-white border-0 d-flex gap-2">
+        @if (Model.Status != WatchStatus.Watched)
+        {
+            <a class="btn btn-success" asp-action="MarkAsWatched" asp-route-id="@Model.Id">Отметить как просмотренное</a>
+        }
+        <a class="btn btn-outline-secondary ms-auto" asp-action="Index">Назад</a>
+    </div>
+</div>

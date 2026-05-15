@@ -1,0 +1,73 @@
+<Window x:Class="EmployeeApp.EmployeeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Сотрудник"
+        Height="560"
+        Width="460"
+        Background="{StaticResource BgBrush}"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        FontFamily="Segoe UI"
+        Opacity="0">
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard Storyboard="{StaticResource WindowFadeIn}"/>
+        </EventTrigger>
+    </Window.Triggers>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="{StaticResource HeaderBrush}" Padding="22,18">
+            <StackPanel Orientation="Horizontal">
+                <Border Width="44" Height="44" CornerRadius="14" Background="#33FFFFFF" Margin="0,0,14,0">
+                    <Path Width="22" Height="22" Stretch="Uniform" Fill="White"
+                          Data="M12,12 C14.21,12 16,10.21 16,8 C16,5.79 14.21,4 12,4 C9.79,4 8,5.79 8,8 C8,10.21 9.79,12 12,12 Z M12,14 C9.33,14 4,15.34 4,18 L4,20 L20,20 L20,18 C20,15.34 14.67,14 12,14 Z"/>
+                </Border>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Карточка сотрудника" Foreground="White" FontSize="16" FontWeight="Bold"/>
+                    <TextBlock Text="Заполните данные сотрудника" Foreground="#E0E7FF" FontSize="11" Margin="0,2,0,0"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <StackPanel Grid.Row="1" Margin="24">
+            <TextBlock Text="ФИО" Style="{StaticResource LabelStyle}"/>
+            <TextBox Margin="0,5,0,14"
+                     Text="{Binding FullName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock Text="ДОЛЖНОСТЬ" Style="{StaticResource LabelStyle}"/>
+            <ComboBox Margin="0,5,0,14"
+                      SelectedItem="{Binding Position, Mode=TwoWay}">
+                <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib">Менеджер</sys:String>
+                <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib">Разработчик</sys:String>
+                <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib">Бухгалтер</sys:String>
+                <sys:String xmlns:sys="clr-namespace:System;assembly=mscorlib">Дизайнер</sys:String>
+            </ComboBox>
+
+            <TextBlock Text="ОТДЕЛ" Style="{StaticResource LabelStyle}"/>
+            <ComboBox x:Name="DepartmentBox" Margin="0,5,0,14"
+                      DisplayMemberPath="Name" SelectedValuePath="Name"
+                      SelectedValue="{Binding Department, Mode=TwoWay}"/>
+
+            <TextBlock Text="ОКЛАД, ₽" Style="{StaticResource LabelStyle}"/>
+            <TextBox Margin="0,5,0,14"
+                     Text="{Binding Salary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <CheckBox Content="Доступен для связи" IsChecked="{Binding IsAvailable, Mode=TwoWay}"
+                      Margin="0,4,0,22"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Отмена" Width="120" Height="38" Margin="0,0,10,0"
+                        Style="{StaticResource GhostButtonStyle}" Click="CancelButton_Click"/>
+                <Button Content="Сохранить" Width="120" Height="38"
+                        Style="{StaticResource PrimaryButtonStyle}" IsDefault="True"
+                        Click="SaveButton_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
